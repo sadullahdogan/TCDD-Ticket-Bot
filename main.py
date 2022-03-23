@@ -114,7 +114,7 @@ def sayfaKontrol(selfie):
                                 time.sleep(2)
                                 inputs=driver.find_element()(by=By.CSS_SELECTOR,value="input[type='checkbox']")
                                 if(len(inputs)>2):
-                                    inputs[3].click()
+                                    inputs[2].click()
                                     time.sleep(3)
                                     cinsiyetForm= driver.find_element(by=By.ID,value="cinsiyet_secimi_form")
                                     divs=cinsiyetForm.find_element(by=By.TAG_NAME,value='div')
