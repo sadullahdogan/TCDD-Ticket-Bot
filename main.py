@@ -14,7 +14,7 @@ import os
 driver = webdriver.Chrome(ChromeDriverManager().install())
 string0 = "İstanbul(Söğütlü Ç.)"#kalkiş istasyonu
 string1 = "ERYAMAN YHT"#variş istasyonu
-date = "31.03.2022" #Gidis tarihi eger bugunse None, degilse '22.11.2019' formatinda yaz
+date = "23.03.2022" #Gidis tarihi eger bugunse None, degilse '22.11.2019' formatinda yaz
 #fullness = '2' #Kapasite bu sayidan farkli olursa bana bildirim at
 hour = "19:15" #Sefer saati format '14:35'
 gender=1  #erkek 1 kadin 2
@@ -46,7 +46,7 @@ def sayfaKontrol(selfie,timer):
                                 devamBtn.click()
                                 notify_windows("bilet bulundu koş", message)
                                 return False
-                            elif message[23]!='(':
+                            elif message[23]!=')':
                                 print(message)
                                 btnText='/html/body/div[3]/div[2]/div/div/div/div/form/div[1]/div/div[1]/div/div/div/div[1]/div/div/div/table/tbody/tr[{0}]/td[7]/div'.format(row)
                                 print(btnText)
@@ -65,6 +65,13 @@ def sayfaKontrol(selfie,timer):
                                     cinsiyetForm= driver.find_element_by_id("cinsiyet_secimi_form")
                                     divs=cinsiyetForm.find_elements_by_tag_name('div')
                                     divs[gender].click()
+                                elif(len(inputs)<3):
+                                    inputs[0].click()
+                                    time.sleep(3)
+                                    cinsiyetForm= driver.find_element_by_id("cinsiyet_secimi_form")
+                                    divs=cinsiyetForm.find_elements_by_tag_name('div')
+                                    divs[gender].click()
+                                    notify_windows("bilet bulundu ama engelli bölümü olabilir.", message)
 
                                 notify_windows("bilet bulundu koş", message)
                                 return False
