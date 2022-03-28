@@ -14,7 +14,7 @@ import os
 driver = webdriver.Chrome(ChromeDriverManager().install())
 string0 = "İstanbul(Söğütlü Ç.)"#kalkiş istasyonu
 string1 = "ERYAMAN YHT"#variş istasyonu
-date = "23.03.2022" #Gidis tarihi eger bugunse None, degilse '22.11.2019' formatinda yaz
+date = "01.04.2022" #Gidis tarihi eger bugunse None, degilse '22.11.2019' formatinda yaz
 #fullness = '2' #Kapasite bu sayidan farkli olursa bana bildirim at
 hour = "" #Sefer saati format '14:35' boş bırak tüm seferlere baksın o günkü
 gender=1  #erkek 1 kadin 2
@@ -97,27 +97,13 @@ def sayfaKontrol(selfie):
                                 devamBtnTxt='/html/body/div[3]/div[2]/div/div/div/div/form/div[1]/div/div[1]/div/div/div/table[2]/tbody/tr/td[2]/button/span'
                                 devamBtn=driver.find_element(by=By.XPATH,value=devamBtnTxt)
                                 devamBtn.click()
-                                notify_windows("bilet bulundu koş", message)
-                                return False
-                            elif message[23]!=')':
-                                message+=" "+ seferZamani
-                                print(message)
-                                btnText='/html/body/div[3]/div[2]/div/div/div/div/form/div[1]/div/div[1]/div/div/div/div[1]/div/div/div/table/tbody/tr[{0}]/td[7]/div'.format(row)
-                                print(btnText)
-                                secBtn=driver.find_element(by=By.XPATH,value=btnText)
-                                # secBtn= wait.until(EC.presence_of_element_located((By.XPATH, btnText)))
-                                secBtn.click()
                                 time.sleep(2)
-                                devamBtnTxt='/html/body/div[3]/div[2]/div/div/div/div/form/div[1]/div/div[1]/div/div/div/table[2]/tbody/tr/td[2]/button/span'
-                                devamBtn=driver.find_element(by=By.XPATH,value=devamBtnTxt)
-                                devamBtn.click()
-                                time.sleep(2)
-                                inputs=driver.find_element()(by=By.CSS_SELECTOR,value="input[type='checkbox']")
+                                inputs=driver.find_elements(by=By.CSS_SELECTOR,value="input[type='checkbox']")
                                 if(len(inputs)>2):
                                     inputs[2].click()
                                     time.sleep(3)
                                     cinsiyetForm= driver.find_element(by=By.ID,value="cinsiyet_secimi_form")
-                                    divs=cinsiyetForm.find_element(by=By.TAG_NAME,value='div')
+                                    divs=cinsiyetForm.find_elements(by=By.TAG_NAME,value='div')
                                     divs[gender].click()
                                 elif(len(inputs)<3):
                                     inputs[0].click()
@@ -126,8 +112,38 @@ def sayfaKontrol(selfie):
                                     divs=cinsiyetForm.find_element(by=By.TAG_NAME,value='div')
                                     divs[gender].click()
                                     notify_windows("bilet bulundu ama engelli bölümü olabilir.", message)
+                                notify_windows("bilet bulundu koş", message)
+                                return False
+                            elif message[23]!=')':
+                                message+=" "+ seferZamani
+                                print(message)
+                                btnText='/html/body/div[3]/div[2]/div/div/div/div/form/div[1]/div/div[1]/div/div/div/div[1]/div/div/div/table/tbody/tr[{0}]/td[7]/div'.format(row)
+                                print(btnText)
+                                secBtn=driver.find_elements(by=By.XPATH,value=btnText)
+                                # secBtn= wait.until(EC.presence_of_element_located((By.XPATH, btnText)))
+                                secBtn.click()
+                                time.sleep(2)
+                                devamBtnTxt='/html/body/div[3]/div[2]/div/div/div/div/form/div[1]/div/div[1]/div/div/div/table[2]/tbody/tr/td[2]/button/span'
+                                devamBtn=driver.find_element(by=By.XPATH,value=devamBtnTxt)
+                                devamBtn.click()
+                                time.sleep(2)
+                                inputs=driver.find_element(by=By.CSS_SELECTOR,value="input[type='checkbox']")
+                                if(len(inputs)>2):
+                                    inputs[2].click()
+                                    time.sleep(3)
+                                    cinsiyetForm= driver.find_element(by=By.ID,value="cinsiyet_secimi_form")
+                                    divs=cinsiyetForm.find_elements(by=By.TAG_NAME,value='div')
+                                    divs[gender].click()
+                                elif(len(inputs)<3):
+                                    inputs[0].click()
+                                    time.sleep(3)
+                                    cinsiyetForm= driver.find_element(by=By.ID,value="cinsiyet_secimi_form")
+                                    divs=cinsiyetForm.find_elements(by=By.TAG_NAME,value='div')
+                                    divs[gender].click()
+                                    notify_windows("bilet bulundu ama engelli bölümü olabilir.", message)
 
                                 notify_windows("bilet bulundu koş", message)
+                                return False
                                 
                             else:
                                 message+=" "+ seferZamani
@@ -136,7 +152,7 @@ def sayfaKontrol(selfie):
                                 print("Aradiğiniz seferde boş yer yok...")
                                
 
-                            return True
+                            
 
 
                     except Exception as inst:
