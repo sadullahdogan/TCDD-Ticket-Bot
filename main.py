@@ -13,12 +13,12 @@ import os
 
 driver = webdriver.Chrome(ChromeDriverManager().install())
 string0 = "İstanbul(Söğütlü Ç.)"#kalkiş istasyonu
-string1 = "ERYAMAN YHT"#variş istasyonu
-date = "29.04.2022" #Gidis tarihi eger bugunse None, degilse '22.11.2019' formatinda yaz
-#fullness = '2' #Kapasite bu sayidan farkli olursa bana bildirim at
+#string1 = "ERYAMAN YHT"#variş istasyonu
+string1 = "Ankara Gar"#variş istasyonu
+date = "22.05.2022" #Gidis tarihi 
 hour = "" #Sefer saati format '14:35' boş bırak tüm seferlere baksın o günkü
 gender=1  #erkek 1 kadin 2
-# index = 5 #Sefer listesinde trenin gozuktugu sira
+wait_time=10
 def notify_windows(title, text):
     toast = ToastNotifier()
     toast.show_toast(title,text,duration=20)
@@ -206,7 +206,7 @@ while RES:
         RES=sayfaKontrol(driver)
         i += 1
         print("Deneme Sayisi : ",i)
-        time.sleep(10)
+        time.sleep(wait_time)
 
         
     except Exception as exc:
